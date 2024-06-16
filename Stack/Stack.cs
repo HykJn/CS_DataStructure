@@ -1,75 +1,76 @@
-﻿using System;
-
-public struct Stack<T>
+﻿namespace Stack
 {
-    public int size;
-    public bool IsEmpty
+    public struct Stack<T>
     {
-        get
+        public int size;
+        public bool IsEmpty
         {
-            return top == 0;
+            get
+            {
+                return top == 0;
+            }
         }
-    }
-    public bool IsFull
-    {
-        get
+        public bool IsFull
         {
-            return top == size;
+            get
+            {
+                return top == size;
+            }
         }
-    }
 
-    int top;
-    T?[] container;
-    public void Push(T value)
-    {
-        if (IsFull)
+        int top;
+        T?[] container;
+        public void Push(T value)
         {
-            Console.WriteLine("Can't Push Because Stack is Full");
+            if (IsFull)
+            {
+                Console.WriteLine("Can't Push Because Stack is Full");
+            }
+            else container[top++] = value;
         }
-        else container[top++] = value;
-    }
 
-    public T? Pop()
-    {
-        if (IsEmpty)
+        public T? Pop()
         {
-            Console.WriteLine("Empty");
-            return default;
+            if (IsEmpty)
+            {
+                Console.WriteLine("Empty");
+                return default;
+            }
+            else
+            {
+                T? temp = container[--top];
+                container[top] = default;
+                return temp;
+            }
         }
-        else
-        {
-            T? temp = container[--top];
-            container[top] = default;
-            return temp;
-        }
-    }
 
-    public T? Peek()
-    {
-        if (IsEmpty)
+        public T? Peek()
         {
-            Console.WriteLine("Empty");
-            return default;
+            if (IsEmpty)
+            {
+                Console.WriteLine("Empty");
+                return default;
+            }
+            else
+            {
+                return container[top - 1];
+            }
         }
-        else
-        {
-            return container[top - 1];
-        }
-    }
-    
-    public void PrintContainer()
-    {
-        for (int i = size - 1; i >= 0; i--)
-        {
-            if (i + 1 == top) Console.WriteLine($"|{i}|{container[i]}" + " <--Top");
-            else Console.WriteLine($"|{i}|{container[i]}");
-        }
-    }
 
-    public Stack(int size)
-    {
-        this.size = size;
-        container = new T[this.size];
-        top = 0;
+        public void PrintContainer()
+        {
+            for (int i = size - 1; i >= 0; i--)
+            {
+                if (i + 1 == top) Console.WriteLine($"|{i}|{container[i]}" + " <--Top");
+                else Console.WriteLine($"|{i}|{container[i]}");
+            }
+        }
+
+        public Stack(int size)
+        {
+            this.size = size;
+            container = new T[this.size];
+            top = 0;
+        }
     }
 }
