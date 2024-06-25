@@ -7,8 +7,16 @@ namespace Program
     {
         public static void Main()
         {
-            StackEX();
-            QueueEX();
+            MyCircularQueue<int> myQueue = new(5);
+            myQueue.Enqueue(1);
+            myQueue.Enqueue(2);
+            myQueue.Enqueue(3);
+            myQueue.Enqueue(4);
+            myQueue.Enqueue(5);
+            myQueue.Dequeue();
+            myQueue.Dequeue();
+            myQueue.Enqueue(6);
+            myQueue.PrintContainer();
         }
 
         public static void StackEX()
@@ -22,7 +30,7 @@ namespace Program
 
         public static void QueueEX()
         {
-            MyQueue<int> myQueue = new(5);
+            MyLinearQueue<int> myQueue = new(5);
             myQueue.Enqueue(1);
             myQueue.Enqueue(2);
             myQueue.Enqueue(3);
