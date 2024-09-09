@@ -218,4 +218,9 @@ namespace MyLinkedList
             temp.next = head.next;
         }
     }
+
+    public class DoubleLinkedList<T>
+    {
+        DoubleNode<T> head;
+    }
 }

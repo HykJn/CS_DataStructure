@@ -8,7 +8,7 @@ namespace Program
     {
         public static void Main()
         {
-
+            CircularLinkedListEX();
         }
 
         public static void StackEX()
@@ -75,24 +75,24 @@ namespace Program
 
         public static void CircularLinkedListEX()
         {
-            CircularLinkedList<int> myList = new();
+            CircularLinkedList<string> turnTable = new();
 
-            SingleNode<int> a = new(5);
-            SingleNode<int> b = new(4);
-            SingleNode<int> c = new(3);
+            SingleNode<string> Adam = new("Adam");
+            SingleNode<string> Bob = new("Bob");
+            SingleNode<string> Charles = new("Charles");
+            SingleNode<string> Dominic = new("Dominic");
 
-            myList.Insert(a);
-            myList.Insert(b);
-            myList.Insert(c);
+            turnTable.Insert(Adam);
+            turnTable.Insert(Bob);
+            turnTable.Insert(Charles);
+            turnTable.Insert(Dominic);
 
-            myList.PrintList();
-            Console.WriteLine(a.next.item);
-            Console.WriteLine(b.next.item);
-            Console.WriteLine(c.next.item);
-            myList.Pop();
-            myList.PrintList();
-            Console.WriteLine(a.next.item);
-            Console.WriteLine(b.next.item);
+            SingleNode<string> turn = Adam;
+            for(int i = 0; i < 8; i++)
+            {
+                Console.WriteLine(turn.item + "'s turn");
+                turn = turn.next;
+            }
         }
     }
 }
