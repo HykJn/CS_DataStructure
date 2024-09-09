@@ -27,7 +27,7 @@ namespace MyLinkedList
 
     public class SimpleLinkedList<T>
     {
-        SingleNode<T> head = new SingleNode<T>(default);
+        SingleNode<T> head = new(default);
         public int size = 0;
 
         public void Insert(SingleNode<T> item, int? index = null)
@@ -47,9 +47,8 @@ namespace MyLinkedList
             if (temp.next == null) temp.next = item;
             else
             {
-                SingleNode<T> _temp = temp.next;
+                item.next = temp.next;
                 temp.next = item;
-                item.next = _temp;
             }
             size++;
         }
@@ -74,11 +73,10 @@ namespace MyLinkedList
                 temp = temp.next;
             }
 
-            SingleNode<T> _temp = temp.next;
-            T item = _temp.item;
-            temp.next = _temp.next;
+            SingleNode<T> item = temp.next;
+            temp.next = item.next;
             size--;
-            return item;
+            return item.item;
         }
 
         public T GetItem(int index)
@@ -118,6 +116,106 @@ namespace MyLinkedList
 
             Console.WriteLine(index);
             Console.WriteLine(item);
+        }
+    }
+
+    public class CircularLinkedList<T>
+    {
+        SingleNode<T> head = new(default);
+        public int size = 0;
+
+        public void Insert(SingleNode<T> item, int? index = null)
+        {
+            if (index == null) index = size;
+            else if (index >= size || index < 0)
+            {
+                throw new Exception("Out of Range");
+            }
+
+            SingleNode<T> temp = head;
+            for (int i = 0; i < index; i++)
+            {
+                temp = temp.next;
+            }
+            item.next = temp.next;
+            temp.next = item;
+            size++;
+            SetHead();
+        }
+
+        public T Pop(int? index = null)
+        {
+            if (index == null) index = size;
+            else if (index >= size || index < 0)
+            {
+                throw new Exception("Out of Range");
+            }
+
+            if (head.next == null)
+            {
+                throw new Exception("Out of Range(Empty List)");
+            }
+
+            SingleNode<T> temp = head;
+            for (int i = 0; i < index; i++)
+            {
+                temp = temp.next;
+            }
+            SingleNode<T> item = temp.next;
+            temp.next = item.next;
+            size--;
+            SetHead();
+            return item.item;
+        }
+
+        public T GetItem(int? index = null)
+        {
+            if (index == null) index = size;
+            else if (index >= size || index < 0)
+            {
+                throw new Exception("Out of Range");
+            }
+
+            SingleNode<T> temp = head;
+            for(int i = 0; i < index; i++)
+            {
+                temp = temp.next;
+            }
+            T item = temp.next.item;
+            return item;
+        }
+
+        public void PrintList()
+        {
+            if (size == 0)
+            {
+                Console.WriteLine("EMPTY");
+                return;
+            }
+
+            SingleNode<T> temp = head.next;
+            string index = "";
+            string item = "";
+
+            for (int i = 0; i < size; i++)
+            {
+                index += $"|{i}|";
+                item += $" {temp.item.ToString()} ";
+                temp = temp.next;
+            }
+
+            Console.WriteLine(index);
+            Console.WriteLine(item);
+        }
+
+        void SetHead()
+        {
+            SingleNode<T> temp = head;
+            for(int i = 0; i < size; i++)
+            {
+                temp = temp.next;
+            }
+            temp.next = head.next;
         }
     }
 }

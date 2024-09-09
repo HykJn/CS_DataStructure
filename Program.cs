@@ -67,10 +67,32 @@ namespace Program
             myList.Insert(b);
             myList.Insert(c, 1);
             myList.PrintList();
-            myList.Pop(1);
-            myList.Insert(new SingleNode<int>(1));
+            myList.Pop(0);
+            //myList.Insert(new SingleNode<int>(1));
             myList.PrintList();
             Console.WriteLine(myList.GetItem(1));
+        }
+
+        public static void CircularLinkedListEX()
+        {
+            CircularLinkedList<int> myList = new();
+
+            SingleNode<int> a = new(5);
+            SingleNode<int> b = new(4);
+            SingleNode<int> c = new(3);
+
+            myList.Insert(a);
+            myList.Insert(b);
+            myList.Insert(c);
+
+            myList.PrintList();
+            Console.WriteLine(a.next.item);
+            Console.WriteLine(b.next.item);
+            Console.WriteLine(c.next.item);
+            myList.Pop();
+            myList.PrintList();
+            Console.WriteLine(a.next.item);
+            Console.WriteLine(b.next.item);
         }
     }
 }
