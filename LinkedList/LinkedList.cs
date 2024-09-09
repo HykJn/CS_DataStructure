@@ -140,7 +140,7 @@ namespace MyLinkedList
             item.next = temp.next;
             temp.next = item;
             size++;
-            SetHead();
+            SetLink();
         }
 
         public T Pop(int? index = null)
@@ -164,7 +164,7 @@ namespace MyLinkedList
             SingleNode<T> item = temp.next;
             temp.next = item.next;
             size--;
-            SetHead();
+            SetLink();
             return item.item;
         }
 
@@ -208,7 +208,7 @@ namespace MyLinkedList
             Console.WriteLine(item);
         }
 
-        void SetHead()
+        void SetLink()
         {
             SingleNode<T> temp = head;
             for(int i = 0; i < size; i++)
@@ -221,6 +221,117 @@ namespace MyLinkedList
 
     public class DoubleLinkedList<T>
     {
-        DoubleNode<T> head;
+        DoubleNode<T> head = new(default);
+        public int size = 0;
+
+        public void Insert(DoubleNode<T> item, int? index = null)
+        {
+            if (index == null) index = size;
+            else if (index < 0 || index >= size)
+            {
+                throw new Exception("Out of Range");
+            }
+
+            DoubleNode<T> temp = head;
+            for (int i = 0; i < index; i++)
+            {
+                temp = temp.next;
+            }
+            item.next = temp.next;
+            item.next.prev = item;
+            temp.next = item;
+            item.prev = temp;
+            size++;
+            SetLink();
+        }
+
+        public T Pop(int? index = null)
+        {
+            if (index == null) index = size;
+            else if (index >= size || index < 0)
+            {
+                throw new Exception("Out of Range");
+            }
+
+            if (head.next == head)
+            {
+                throw new Exception("Out of Range(Empty List)");
+            }
+
+            DoubleNode<T> temp = head;
+            for(int i = 0; i < index; i++)
+            {
+                temp = temp.next;
+            }
+            DoubleNode<T> item = temp.next;
+            temp.next = item.next;
+            item.next.prev = temp;
+            size--;
+            SetLink();
+            return item.item;
+        }
+
+        public T GetItem(int? index = null)
+        {
+            if (index == null) index = size;
+            else if (index >= size || index < 0)
+            {
+                throw new Exception("Out of Range");
+            }
+
+            if (head.next == head)
+            {
+                throw new Exception("Out of Range(Empty List)");
+            }
+
+            DoubleNode<T> temp = head;
+            for (int i = 0; i < index; i++)
+            {
+                temp = temp.next;
+            }
+
+            return temp.next.item;
+        }
+
+        public void PrintList()
+        {
+            if (size == 0)
+            {
+                Console.WriteLine("EMPTY");
+                return;
+            }
+
+            DoubleNode<T> temp = head.next;
+            string index = "";
+            string item = "";
+
+            for (int i = 0; i < size; i++)
+            {
+                index += $"|{i}|";
+                item += $" {temp.item.ToString()} ";
+                temp = temp.next;
+            }
+
+            Console.WriteLine(index);
+            Console.WriteLine(item);
+        }
+
+        void SetLink()
+        {
+            DoubleNode<T> temp = head;
+            for(int i = 0; i < size; i++)
+            {
+                temp = temp.next;
+            }
+            temp.next = head.next;
+            head.prev = temp;
+        }
+
+        public DoubleLinkedList()
+        {
+            head.next = head;
+            head.prev = head;
+        }
+
     }
 }

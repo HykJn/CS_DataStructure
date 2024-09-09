@@ -8,7 +8,7 @@ namespace Program
     {
         public static void Main()
         {
-            CircularLinkedListEX();
+            
         }
 
         public static void StackEX()
@@ -93,6 +93,29 @@ namespace Program
                 Console.WriteLine(turn.item + "'s turn");
                 turn = turn.next;
             }
+        }
+
+        public static void DoubleLinkedListEx()
+        {
+            DoubleLinkedList<int> myList = new();
+
+            DoubleNode<int> a = new(1);
+            DoubleNode<int> b = new(2);
+            DoubleNode<int> c = new(3);
+
+            myList.Insert(a);
+            myList.Insert(b);
+            myList.Insert(c);
+
+            myList.PrintList();
+
+            Console.WriteLine(a.next.item);
+            Console.WriteLine(b.next.item);
+            Console.WriteLine(c.next.item);
+
+            Console.WriteLine(a.prev.item);
+            Console.WriteLine(b.prev.item);
+            Console.WriteLine(c.prev.item);
         }
     }
 }
