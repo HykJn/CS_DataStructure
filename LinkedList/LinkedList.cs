@@ -332,6 +332,5 @@ namespace MyLinkedList
             head.next = head;
             head.prev = head;
         }
-
     }
 }
