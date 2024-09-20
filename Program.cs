@@ -9,16 +9,90 @@ namespace Program
     {
         public static void Main()
         {
-            
+            /*
+             *               1
+             *         /           \
+             *       2              3
+             *    /    \         /     \
+             *   4      5       6       7   
+             *   /\    /
+             *  8  9  10
+             */
+            BinaryTreeNode<int> root = new(1);
+            BinaryTreeNode<int> sub1 = new(2);
+            BinaryTreeNode<int> sub2 = new(3);
+            BinaryTreeNode<int> sub3 = new(4);
+            BinaryTreeNode<int> sub4 = new(5);
+            BinaryTreeNode<int> sub5 = new(6);
+            BinaryTreeNode<int> sub6 = new(7);
+            BinaryTreeNode<int> sub7 = new(8);
+            BinaryTreeNode<int> sub8 = new(9);
+            BinaryTreeNode<int> sub9 = new(10);
+
+            root.lChild = sub1;
+            root.rChild = sub2;
+            sub1.lChild = sub3;
+            sub1.rChild = sub4;
+            sub2.lChild = sub5;
+            sub2.rChild = sub6;
+            sub3.lChild = sub7;
+            sub3.rChild = sub8;
+            sub4.lChild = sub9;
+
+            Console.Write("Preorder: ");
+            PreorderTraversal<int>(root);
+            Console.WriteLine();
+
+            Console.Write("Inorder: ");
+            InorderTraversal<int>(root);
+            Console.WriteLine();
+
+            Console.Write("Postorder: ");
+            PostorderTraversal<int>(root);
+            Console.WriteLine();
+
+            Console.Write("Level: ");
+            LevelTraversal<int>(root);
+            Console.WriteLine();
         }
 
-        public static void StackEX()
+        public static void StackEX() //Brackets Check
         {
-            MyStack<int> myStack = new(5);
-            myStack.Push(1);
-            myStack.Push(2);
-            myStack.Push(3);
-            myStack.PrintContainer();
+            MyStack<char> brackets = new(20);
+            Console.Write("Input math expression: ");
+            string expression = Console.ReadLine();
+
+            foreach(char c in expression)
+            {
+                BracketCheck(c);
+            }
+            if(!brackets.IsEmpty)
+            {
+                Console.WriteLine("Wrong Bracket Pair");
+                return;
+            }
+
+            Console.WriteLine("Success!");
+
+            void BracketCheck(char bracket)
+            {
+                switch (bracket)
+                {
+                    case '[': case '{': case '(':
+                        brackets.Push(bracket);
+                        break;
+                    case ']': case '}': case ')':
+                        char temp = brackets.Pop();
+                        if((temp == ')' && bracket != '(') ||
+                            (temp == '}' && bracket != '{') ||
+                            (temp == ']' && bracket != '['))
+                        {
+                            Console.WriteLine("Wrong Bracket Pair");
+                            return;
+                        }
+                        break;
+                }
+            }
         }
 
         public static void LinearQueueEX()
@@ -152,18 +226,18 @@ namespace Program
 
         public static void TreeLinkExpressionEx()
         {
-            TreeNode<int> root = new(1);
-            TreeNode<int> lNode = new(2);
-            TreeNode<int> rNode = new(3);
-            TreeNode<int> lLChildNode = new(4);
-            TreeNode<int> lRChildNode = new(5);
+            BinaryTreeNode<int> root = new(1);
+            BinaryTreeNode<int> lNode = new(2);
+            BinaryTreeNode<int> rNode = new(3);
+            BinaryTreeNode<int> lLChildNode = new(4);
+            BinaryTreeNode<int> lRChildNode = new(5);
 
             root.lChild = lNode;
             root.rChild = rNode;
             lNode.lChild = lLChildNode;
             lNode.rChild = lRChildNode;
 
-            TreeNode<int> temp = root;
+            BinaryTreeNode<int> temp = root;
 
             for (int i = 0; i < 5; i++)
             {
@@ -183,6 +257,50 @@ namespace Program
                     Console.WriteLine("<--- Leaf Node");
                     break;
                 }
+            }
+        }
+
+        public static void PreorderTraversal<T>(BinaryTreeNode<T>? root)
+        {
+            if(root != null)
+            {
+                Console.Write(root.item + " ");
+                PreorderTraversal<T>(root.lChild);
+                PreorderTraversal<T>(root.rChild);
+            }
+        }
+
+        public static void InorderTraversal<T>(BinaryTreeNode<T>? root)
+        {
+            if(root != null)
+            {
+                InorderTraversal<T>(root.lChild);
+                Console.Write(root.item + " ");
+                InorderTraversal<T>(root.rChild);
+            }
+        }
+
+        public static void PostorderTraversal<T>(BinaryTreeNode<T>? root)
+        {
+            if(root != null)
+            {
+                PostorderTraversal<T>(root.lChild);
+                PostorderTraversal<T>(root.rChild);
+                Console.Write(root.item + " ");
+            }
+        }
+
+        public static void LevelTraversal<T>(BinaryTreeNode<T>? root)
+        {
+            MyLinearQueue<BinaryTreeNode<T>> travelQueue = new(50);
+            if (root == null) return;
+            travelQueue.Enqueue(root);
+            while(!travelQueue.IsEmpty)
+            {
+                BinaryTreeNode<T>? temp = travelQueue.Dequeue();
+                Console.Write(temp.item + " ");
+                if (temp.lChild != null) travelQueue.Enqueue(temp.lChild);
+                if (temp.rChild != null) travelQueue.Enqueue(temp.rChild);
             }
         }
     }
