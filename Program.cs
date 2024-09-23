@@ -9,51 +9,7 @@ namespace Program
     {
         public static void Main()
         {
-            /*
-             *               1
-             *         /           \
-             *       2              3
-             *    /    \         /     \
-             *   4      5       6       7   
-             *   /\    /
-             *  8  9  10
-             */
-            BinaryTreeNode<int> root = new(1);
-            BinaryTreeNode<int> sub1 = new(2);
-            BinaryTreeNode<int> sub2 = new(3);
-            BinaryTreeNode<int> sub3 = new(4);
-            BinaryTreeNode<int> sub4 = new(5);
-            BinaryTreeNode<int> sub5 = new(6);
-            BinaryTreeNode<int> sub6 = new(7);
-            BinaryTreeNode<int> sub7 = new(8);
-            BinaryTreeNode<int> sub8 = new(9);
-            BinaryTreeNode<int> sub9 = new(10);
-
-            root.lChild = sub1;
-            root.rChild = sub2;
-            sub1.lChild = sub3;
-            sub1.rChild = sub4;
-            sub2.lChild = sub5;
-            sub2.rChild = sub6;
-            sub3.lChild = sub7;
-            sub3.rChild = sub8;
-            sub4.lChild = sub9;
-
-            Console.Write("Preorder: ");
-            PreorderTraversal<int>(root);
-            Console.WriteLine();
-
-            Console.Write("Inorder: ");
-            InorderTraversal<int>(root);
-            Console.WriteLine();
-
-            Console.Write("Postorder: ");
-            PostorderTraversal<int>(root);
-            Console.WriteLine();
-
-            Console.Write("Level: ");
-            LevelTraversal<int>(root);
-            Console.WriteLine();
+            BinarySearchTree();
         }
 
         public static void StackEX() //Brackets Check
@@ -260,47 +216,137 @@ namespace Program
             }
         }
 
-        public static void PreorderTraversal<T>(BinaryTreeNode<T>? root)
+        public static void BinaryTreeTraversal()
         {
-            if(root != null)
+            /*
+             *               1
+             *         /           \
+             *       2              3
+             *    /    \         /     \
+             *   4      5       6       7   
+             *   /\    /
+             *  8  9  10
+             */
+            BinaryTreeNode<int> root = new(1);
+            BinaryTreeNode<int> sub1 = new(2);
+            BinaryTreeNode<int> sub2 = new(3);
+            BinaryTreeNode<int> sub3 = new(4);
+            BinaryTreeNode<int> sub4 = new(5);
+            BinaryTreeNode<int> sub5 = new(6);
+            BinaryTreeNode<int> sub6 = new(7);
+            BinaryTreeNode<int> sub7 = new(8);
+            BinaryTreeNode<int> sub8 = new(9);
+            BinaryTreeNode<int> sub9 = new(10);
+
+            root.lChild = sub1;
+            root.rChild = sub2;
+            sub1.lChild = sub3;
+            sub1.rChild = sub4;
+            sub2.lChild = sub5;
+            sub2.rChild = sub6;
+            sub3.lChild = sub7;
+            sub3.rChild = sub8;
+            sub4.lChild = sub9;
+
+            Console.Write("Preorder: ");
+            PreorderTraversal<int>(root);
+            Console.WriteLine();
+
+            Console.Write("Inorder: ");
+            InorderTraversal<int>(root);
+            Console.WriteLine();
+
+            Console.Write("Postorder: ");
+            PostorderTraversal<int>(root);
+            Console.WriteLine();
+
+            Console.Write("Level: ");
+            LevelTraversal<int>(root);
+            Console.WriteLine();
+
+            static void PreorderTraversal<T>(BinaryTreeNode<T>? root)
             {
-                Console.Write(root.item + " ");
-                PreorderTraversal<T>(root.lChild);
-                PreorderTraversal<T>(root.rChild);
+                if (root != null)
+                {
+                    Console.Write(root.item + " ");
+                    PreorderTraversal<T>(root.lChild);
+                    PreorderTraversal<T>(root.rChild);
+                }
+            }
+
+            static void InorderTraversal<T>(BinaryTreeNode<T>? root)
+            {
+                if (root != null)
+                {
+                    InorderTraversal<T>(root.lChild);
+                    Console.Write(root.item + " ");
+                    InorderTraversal<T>(root.rChild);
+                }
+            }
+
+            static void PostorderTraversal<T>(BinaryTreeNode<T>? root)
+            {
+                if (root != null)
+                {
+                    PostorderTraversal<T>(root.lChild);
+                    PostorderTraversal<T>(root.rChild);
+                    Console.Write(root.item + " ");
+                }
+            }
+
+            static void LevelTraversal<T>(BinaryTreeNode<T>? root)
+            {
+                MyLinearQueue<BinaryTreeNode<T>> travelQueue = new(50);
+                if (root == null) return;
+                travelQueue.Enqueue(root);
+                while (!travelQueue.IsEmpty)
+                {
+                    BinaryTreeNode<T>? temp = travelQueue.Dequeue();
+                    Console.Write(temp.item + " ");
+                    if (temp.lChild != null) travelQueue.Enqueue(temp.lChild);
+                    if (temp.rChild != null) travelQueue.Enqueue(temp.rChild);
+                }
             }
         }
 
-        public static void InorderTraversal<T>(BinaryTreeNode<T>? root)
+        public static void BinarySearchTree()
         {
-            if(root != null)
-            {
-                InorderTraversal<T>(root.lChild);
-                Console.Write(root.item + " ");
-                InorderTraversal<T>(root.rChild);
-            }
-        }
+            BinaryTreeNode<int> root = new(18);
+            BinaryTreeNode<int> sub1 = new(7);
+            BinaryTreeNode<int> sub2 = new(26);
+            BinaryTreeNode<int> sub3 = new(3);
+            BinaryTreeNode<int> sub4 = new(12);
+            BinaryTreeNode<int> sub5 = new(31);
+            BinaryTreeNode<int> sub6 = new(27);
 
-        public static void PostorderTraversal<T>(BinaryTreeNode<T>? root)
-        {
-            if(root != null)
-            {
-                PostorderTraversal<T>(root.lChild);
-                PostorderTraversal<T>(root.rChild);
-                Console.Write(root.item + " ");
-            }
-        }
+            root.lChild = sub1; sub1.parent = root;
+            root.rChild = sub2; sub2.parent = root;
+            sub1.lChild = sub3; sub3.parent = sub1;
+            sub1.rChild = sub4; sub4.parent = sub1;
+            sub2.rChild = sub5; sub5.parent = sub2;
+            sub5.lChild = sub6; sub6.parent = sub5;
 
-        public static void LevelTraversal<T>(BinaryTreeNode<T>? root)
-        {
-            MyLinearQueue<BinaryTreeNode<T>> travelQueue = new(50);
-            if (root == null) return;
-            travelQueue.Enqueue(root);
-            while(!travelQueue.IsEmpty)
+            static BinaryTreeNode<int> Search(BinaryTreeNode<int>? root, int key)
             {
-                BinaryTreeNode<T>? temp = travelQueue.Dequeue();
-                Console.Write(temp.item + " ");
-                if (temp.lChild != null) travelQueue.Enqueue(temp.lChild);
-                if (temp.rChild != null) travelQueue.Enqueue(temp.rChild);
+                if (root == null) return null;
+                if (root.item == key) return root;
+                else if (root.item > key) return Search(root.lChild, key);
+                else return Search(root.rChild, key);
+            }
+
+            static void Insert(BinaryTreeNode<int> root, BinaryTreeNode<int> node)
+            {
+                if (node.item == root.item) return;
+                else if (node.item > root.item)
+                {
+                    if (root.rChild == null) root.rChild = node;
+                    else Insert(root.rChild, node);
+                }
+                else
+                {
+                    if (root.lChild == null) root.lChild = node;
+                    else Insert(root.lChild, node);
+                }
             }
         }
     }
