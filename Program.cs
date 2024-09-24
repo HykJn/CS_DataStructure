@@ -9,6 +9,7 @@ namespace Program
     {
         public static void Main()
         {
+            BinaryTreeTraversal();
             BinarySearchTree();
         }
 
@@ -249,64 +250,20 @@ namespace Program
             sub4.lChild = sub9;
 
             Console.Write("Preorder: ");
-            PreorderTraversal<int>(root);
+            BinaryTreeNode<int>.PreorderTraversal(root);
             Console.WriteLine();
 
             Console.Write("Inorder: ");
-            InorderTraversal<int>(root);
+            BinaryTreeNode<int>.InorderTraversal(root);
             Console.WriteLine();
 
             Console.Write("Postorder: ");
-            PostorderTraversal<int>(root);
+            BinaryTreeNode<int>.PostorderTraversal(root);
             Console.WriteLine();
 
             Console.Write("Level: ");
-            LevelTraversal<int>(root);
+            BinaryTreeNode<int>.LevelTraversal(root);
             Console.WriteLine();
-
-            static void PreorderTraversal<T>(BinaryTreeNode<T>? root)
-            {
-                if (root != null)
-                {
-                    Console.Write(root.item + " ");
-                    PreorderTraversal<T>(root.lChild);
-                    PreorderTraversal<T>(root.rChild);
-                }
-            }
-
-            static void InorderTraversal<T>(BinaryTreeNode<T>? root)
-            {
-                if (root != null)
-                {
-                    InorderTraversal<T>(root.lChild);
-                    Console.Write(root.item + " ");
-                    InorderTraversal<T>(root.rChild);
-                }
-            }
-
-            static void PostorderTraversal<T>(BinaryTreeNode<T>? root)
-            {
-                if (root != null)
-                {
-                    PostorderTraversal<T>(root.lChild);
-                    PostorderTraversal<T>(root.rChild);
-                    Console.Write(root.item + " ");
-                }
-            }
-
-            static void LevelTraversal<T>(BinaryTreeNode<T>? root)
-            {
-                MyLinearQueue<BinaryTreeNode<T>> travelQueue = new(50);
-                if (root == null) return;
-                travelQueue.Enqueue(root);
-                while (!travelQueue.IsEmpty)
-                {
-                    BinaryTreeNode<T>? temp = travelQueue.Dequeue();
-                    Console.Write(temp.item + " ");
-                    if (temp.lChild != null) travelQueue.Enqueue(temp.lChild);
-                    if (temp.rChild != null) travelQueue.Enqueue(temp.rChild);
-                }
-            }
         }
 
         public static void BinarySearchTree()
@@ -326,28 +283,14 @@ namespace Program
             sub2.rChild = sub5; sub5.parent = sub2;
             sub5.lChild = sub6; sub6.parent = sub5;
 
-            static BinaryTreeNode<int> Search(BinaryTreeNode<int>? root, int key)
-            {
-                if (root == null) return null;
-                if (root.item == key) return root;
-                else if (root.item > key) return Search(root.lChild, key);
-                else return Search(root.rChild, key);
-            }
+            Console.WriteLine(BinaryTreeNode<int>.Search(root, 12).parent.item);
 
-            static void Insert(BinaryTreeNode<int> root, BinaryTreeNode<int> node)
-            {
-                if (node.item == root.item) return;
-                else if (node.item > root.item)
-                {
-                    if (root.rChild == null) root.rChild = node;
-                    else Insert(root.rChild, node);
-                }
-                else
-                {
-                    if (root.lChild == null) root.lChild = node;
-                    else Insert(root.lChild, node);
-                }
-            }
+            BinaryTreeNode<int> sub7 = new(9);
+            BinaryTreeNode<int>.Insert(root, sub7);
+            Console.WriteLine(sub7.parent.item);
+
+            BinaryTreeNode<int>.Delete(root, 7);
+            Console.WriteLine(root.lChild.item);
         }
     }
 }
