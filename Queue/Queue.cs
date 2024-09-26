@@ -322,4 +322,63 @@
             container = new T[size];
         }
     }
+
+    public struct PriorityNode<T>
+    {
+        public int priority;
+        public T item;
+
+        public PriorityNode(T item, int priority)
+        {
+            this.item = item;
+            this.priority = priority;
+        }
+    }
+
+    public struct MyPriorityQueue<T>
+    {
+        int rear = 1;
+        int size;
+        bool isMaxHeap;
+        PriorityNode<T>[] heap;
+
+        public void Insert(PriorityNode<T> item)
+        {
+            int idx = rear;
+            while (idx != 1 && isMaxHeap ? item.priority >= heap[idx / 2].priority : item.priority <= heap[idx / 2].priority)
+            {
+                heap[idx] = heap[idx / 2];
+                idx /= 2;
+            }
+            heap[idx] = item;
+            rear++;
+        }
+
+        public T Delete()
+        {
+            T item = heap[1].item;
+            PriorityNode<T> temp = heap[--rear];
+
+            int parent = 1; int child = 2;
+            while (child <= rear)
+            {
+                if (child < rear && isMaxHeap ? heap[child].priority < heap[child + 1].priority : heap[child].priority > heap[child + 1].priority) child++;
+
+                if (isMaxHeap ? temp.priority >= heap[child].priority : temp.priority <= heap[child].priority) break;
+
+                heap[parent] = heap[child];
+                parent = child;
+                child *= 2;
+            }
+            heap[parent] = temp;
+            return item;
+        }
+
+        public MyPriorityQueue(int size, bool isMaxHeap)
+        {
+            this.size = size;
+            this.isMaxHeap = isMaxHeap;
+            heap = new PriorityNode<T>[size];
+        }
+    }
 }

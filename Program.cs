@@ -9,8 +9,24 @@ namespace Program
     {
         public static void Main()
         {
-            BinaryTreeTraversal();
-            BinarySearchTree();
+            PriorityNode<int> a = new(10, 10);
+            PriorityNode<int> b = new(5, 5);
+            PriorityNode<int> c = new(30, 30);
+
+            int d, e, f;
+
+            MyPriorityQueue<int> q = new(10, true);
+            q.Insert(a);
+            q.Insert(b);
+            q.Insert(c);
+
+            d = q.Delete();
+            e = q.Delete();
+            f = q.Delete();
+
+            Console.WriteLine(d);
+            Console.WriteLine(e);
+            Console.WriteLine(f);
         }
 
         public static void StackEX() //Brackets Check
