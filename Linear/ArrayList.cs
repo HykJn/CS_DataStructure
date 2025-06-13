@@ -9,13 +9,13 @@ namespace CS_DataStructure.Linear
         {
             get
             {
-                if (index < 0 || index >= this.count)
+                if (index < 0 || index >= this.Count)
                     throw new IndexOutOfRangeException();
                 return array[index];
             }
             set
             {
-                if (index < 0 || index >= this.count)
+                if (index < 0 || index >= this.Count)
                     throw new IndexOutOfRangeException();
                 array[index] = value;
             }
@@ -31,19 +31,18 @@ namespace CS_DataStructure.Linear
                 Resize(value);
             }
         }
-        public int Count => count;
+        public int Count { get; private set; }
         public bool IsReadOnly { get; set; }
 
         private T[] array;
         private int capacity;
-        private int count;
         #endregion
 
         #region ==========Methods==========  
         public int IndexOf(T item)
         {
             //Use Linear search -> O(n)  
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < Count; i++)
             {
                 if (array[i].Equals(item)) return i;
             }
@@ -53,39 +52,39 @@ namespace CS_DataStructure.Linear
         public void Add(T item)
         {
             if (IsReadOnly) throw new NotSupportedException();
-            if (count == capacity) Resize();
-            array[count] = item;
-            count++;
+            if (Count == capacity) Resize();
+            array[Count] = item;
+            Count++;
         }
 
         public void Insert(int index, T item)
         {
             if (IsReadOnly) throw new NotSupportedException();
-            if (index < 0 || index > count) throw new IndexOutOfRangeException();
-            if (count == capacity) Resize();
-            if (index == count)
+            if (index < 0 || index > Count) throw new IndexOutOfRangeException();
+            if (Count == capacity) Resize();
+            if (index == Count)
             {
                 Add(item);
                 return;
             }
 
-            Array.Copy(array, index, array, index + 1, count - index);
+            Array.Copy(array, index, array, index + 1, Count - index);
             array[index] = item;
-            count++;
+            Count++;
         }
 
         public void RemoveAt(int index)
         {
             if (IsReadOnly) throw new NotSupportedException();
-            if (index < 0 || index >= count) throw new IndexOutOfRangeException();
-            if (index == count - 1)
+            if (index < 0 || index >= Count) throw new IndexOutOfRangeException();
+            if (index == Count - 1)
             {
-                count--;
+                Count--;
                 return;
             }
 
-            Array.Copy(array, index + 1, array, index, count - index);
-            count--;
+            Array.Copy(array, index + 1, array, index, Count - index);
+            Count--;
         }
 
         public bool Remove(T item)
@@ -110,13 +109,13 @@ namespace CS_DataStructure.Linear
         {
             if (IsReadOnly) throw new NotSupportedException();
             capacity = 16;
-            count = 0;
+            Count = 0;
             array = new T[capacity];
         }
 
         public bool Contains(T item)
         {
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < Count; i++)
             {
                 if (array[i].Equals(item)) return true;
             }
@@ -126,14 +125,14 @@ namespace CS_DataStructure.Linear
         public void CopyTo(T[] destination, int destinationIndex)
         {
             if (destinationIndex < 0 || destinationIndex >= destination.Length) throw new IndexOutOfRangeException();
-            if (destination.Length - destinationIndex < count) throw new ArgumentOutOfRangeException(nameof(destinationIndex));
+            if (destination.Length - destinationIndex < Count) throw new ArgumentOutOfRangeException(nameof(destinationIndex));
 
-            Array.Copy(array, 0, destination, destinationIndex, count);
+            Array.Copy(array, 0, destination, destinationIndex, Count);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < Count; i++)
             {
                 yield return array[i];
             }
@@ -141,7 +140,7 @@ namespace CS_DataStructure.Linear
 
         public IEnumerator<T> GetEnumerator()
         {
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < Count; i++)
             {
                 yield return array[i];
             }
@@ -151,8 +150,8 @@ namespace CS_DataStructure.Linear
         {
             Console.WriteLine("==========Array List==========");
             Console.WriteLine("Capacity: " + capacity);
-            Console.WriteLine("Count: " + count);
-            for (int i = 0; i < count; i++)
+            Console.WriteLine("Count: " + Count);
+            for (int i = 0; i < Count; i++)
             {
                 Console.WriteLine($"[{i}]: {array[i]}");
             }
@@ -165,7 +164,7 @@ namespace CS_DataStructure.Linear
             if (capacity == this.capacity) return;
 
             T[] temp = new T[capacity];
-            Array.Copy(array, 0, temp, 0, count);
+            Array.Copy(array, 0, temp, 0, Count);
             array = temp;
             this.capacity = capacity;
         }
@@ -179,7 +178,7 @@ namespace CS_DataStructure.Linear
             this.capacity = capacity;
             array = new T[capacity];
             IsReadOnly = false;
-            count = 0;
+            Count = 0;
         }
 
         public ArrayList() : this(16) { }
