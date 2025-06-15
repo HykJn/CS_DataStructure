@@ -16,7 +16,7 @@
                 for (int i = 0; i < index; i++)
                 {
                     temp = temp.Neighbor;
-                }
+        }
 
                 value.Neighbor = temp.Neighbor.Neighbor;
                 temp.Neighbor = value;
@@ -35,7 +35,7 @@
             for (int i = 0; i < index; i++)
             {
                 temp = temp.Neighbor;
-            }
+        }
             node.Neighbor = temp.Neighbor;
             temp.Neighbor = node;
 
@@ -52,7 +52,7 @@
             for (int i = 0; i < index; i++)
             {
                 temp = temp.Neighbor;
-            }
+        }
             temp.Neighbor = temp.Neighbor.Neighbor;
 
             Count--;
@@ -67,7 +67,7 @@
             for (int i = 0; i < Count; i++)
             {
                 if (temp.Neighbor.Equals(node))
-                {
+        {
                     temp.Neighbor = temp.Neighbor.Neighbor;
                     Count--;
                     return true;
@@ -83,7 +83,7 @@
 
             LinkedNode<T> temp = head;
             for (int i = 0; i <= index; i++)
-            {
+        {
                 temp = temp.Neighbor;
             }
 
@@ -96,7 +96,7 @@
 
             LinkedNode<T> temp = head;
             for (int i = 0; i < Count; i++)
-            {
+        {
                 temp = temp.Neighbor;
 
                 if (temp.Equals(node)) return i + 1;
